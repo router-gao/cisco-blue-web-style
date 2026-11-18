@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="cisco">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 是怎么回答问题的？</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f4ed;color:#192923;font:17px/1.65 "Microsoft YaHei","PingFang SC",sans-serif}main{max-width:1000px;margin:auto;padding:clamp(24px,6vw,76px) clamp(18px,5vw,54px)}h1{font-size:clamp(34px,6vw,62px);line-height:1.14;margin:0 0 14px;letter-spacing:-.04em}h2{font-size:clamp(23px,4vw,32px);line-height:1.3;margin:0 0 16px}p{margin:0}header>p{font-size:clamp(17px,3vw,21px);color:#43554b}section{margin-top:34px}.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:stretch}.step{border-radius:18px;padding:19px;background:#fff}.step strong{display:block;font-size:22px;margin-bottom:6px}.read{background:#d9eddb}.write{background:#ffe2aa}.arrow{align-self:center;color:#53675c;font-size:25px}.label{display:block;margin-top:12px;font-size:14px;color:#35493d}.graph{background:#fff;border-radius:22px;padding:clamp(16px,4vw,30px)}.chart{display:grid;grid-template-columns:minmax(84px,auto) 1fr;gap:9px 12px;align-items:center;margin:18px 0}.timeline{display:grid;grid-template-columns:10fr 2fr 2.5fr;gap:4px}.timeline span{min-height:28px;border-radius:5px;background:#edece6}.timeline .on-read{background:#407553}.timeline .on-write{background:#e6a136}.axis span{min-height:0;background:none;font-size:14px;line-height:1.3}.metric{font-weight:700;font-size:14px}.note{font-size:14px;color:#43554b}.takeaway{margin-top:24px;padding:16px 19px;border-left:5px solid #407553;background:#e2eee2;border-radius:0 12px 12px 0}footer{margin-top:24px;color:#43554b;font-size:14px}@media(max-width:580px){.flow{grid-template-columns:1fr;gap:5px}.arrow{justify-self:center;line-height:1.1;transform:rotate(90deg)}.chart{gap:8px}.metric{font-size:13px}.axis span{font-size:12px}}
+:root{color-scheme:light;--bg:#eef2ff;--ink:#18203d;--muted:#465378;--surface:#fff;--read:#dce5ff;--write:#f2e2ff;--read-bar:#475bd0;--write-bar:#9848be;--track:#e9ecf5}
+:root[data-theme="cisco"]{--bg:#f2f5f7;--ink:#07182c;--muted:#425466;--surface:#fff;--read:#f1f5f8;--write:#f1f5f8;--read-bar:#1769ed;--write-bar:#c22b77;--track:#edf1f4}
+:root[data-theme="tide"]{--bg:#eaf5f5;--ink:#143437;--muted:#385b60;--surface:#fff;--read:#cdeee9;--write:#dbe9ff;--read-bar:#13796d;--write-bar:#3665b5;--track:#e3edef}
+:root[data-theme="apricot"]{--bg:#fff4ec;--ink:#3b2926;--muted:#654841;--surface:#fffdfb;--read:#ffe0cb;--write:#f7deea;--read-bar:#b84f29;--write-bar:#a13f70;--track:#f3e8e1}
+:root[data-theme="night"]{color-scheme:dark;--bg:#121728;--ink:#f1f3ff;--muted:#b5c0dc;--surface:#1b2338;--read:#26365b;--write:#422d50;--read-bar:#82a3ff;--write-bar:#e3a1ec;--track:#2b344d}
+body{background:var(--bg);color:var(--ink)}header>p,.arrow,.label,.note,footer{color:var(--muted)}.step,.graph{background:var(--surface)}.read,.takeaway{background:var(--read)}.write{background:var(--write)}.timeline span{background:var(--track)}.timeline .on-read{background:var(--read-bar)}.timeline .on-write{background:var(--write-bar)}.axis span{background:none}.takeaway{border-color:var(--read-bar)}
+.theme-picker{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:20px}.theme-picker strong{font-size:14px;margin-right:4px}.theme-picker button{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:30px;border:1px solid var(--muted);background:var(--surface);color:var(--ink);font:inherit;font-size:14px;cursor:pointer}.theme-picker button[aria-pressed="true"]{border-color:var(--read-bar);box-shadow:inset 0 0 0 1px var(--read-bar);background:var(--read);font-weight:700}.theme-picker button:focus-visible{outline:2px solid var(--read-bar);outline-offset:3px}.swatch{display:inline-block;width:16px;height:16px;border-radius:50%;background:linear-gradient(115deg,var(--a) 50%,var(--b) 50%)}
+[data-theme="cisco"] main{max-width:1080px;background:var(--surface);padding-top:0}
+[data-theme="cisco"] .intro{background:var(--read);color:var(--ink);margin-inline:calc(-1 * clamp(18px,5vw,54px));padding:clamp(28px,6vw,60px) clamp(18px,5vw,54px)}
+[data-theme="cisco"] .intro p{color:var(--muted)}
+[data-theme="cisco"] .flow{--flow-cyan:#02c8ff;--flow-blue:#0a60ff;background:#f2f5f7;border:1px solid #c5d1db;border-radius:14px;padding:clamp(12px,3vw,24px)}
+[data-theme="cisco"] .step{background:var(--surface);border:1px solid #c5d1db;border-radius:10px}
+[data-theme="cisco"] .step.read{background:#effbff;border-color:var(--flow-cyan);border-top-width:4px}
+[data-theme="cisco"] .step.write{background:#f0f5ff;border-color:var(--flow-blue);border-top-width:4px}
+[data-theme="cisco"] .graph{border:1px solid #d6dee5;border-radius:14px}
+[data-theme="cisco"] .takeaway{border-radius:0}
+[data-theme="cisco"] .chart{--read-bar:#02c8ff;--write-bar:#0a60ff;--track:#f2f5f7}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div class="intro">
+<h1>AI 是怎么回答问题的？</h1>
+<p>想象你把一份很长的阅读材料交给同学，请他用两句话概括。</p>
+</div>
+
+</header>
+<section aria-labelledby="steps">
+<h2 id="steps">先读材料，再开口回答</h2>
+<div class="flow">
+<div class="step"><strong>你把题目交过去</strong><p>你点下发送，把材料和问题一起交给 AI。如果前面还有聊天内容，这些内容也可能一起交过去。</p></div>
+<div class="arrow" aria-hidden="true">→</div>
+<div class="step read"><strong>AI 读题，做准备</strong><p>AI 一段段处理你给的内容，把后面回答时用得上的信息存好。这时电脑已经在忙，你还看不到答案。</p><span class="label">这个阶段叫 <b>prefill</b>，系统显示 <b>reading</b>。</span></div>
+<div class="arrow" aria-hidden="true">→</div>
+<div class="step write"><strong>AI 开始回答</strong><p>AI 每次写出一小段，接着往下写。你看到答案一点点出现，直到写完。</p><span class="label">这时系统显示 <b>generating</b>。</span></div>
+</div>
+</section>
+<section class="graph" aria-labelledby="monitor">
+<h2 id="monitor">为什么显卡很忙，图上却显示 0？</h2>
+<p>下面用一个实际请求来说明。它花了约 <b>46 秒</b>读题，约 <b>半秒</b>写完答案。</p>
+<div class="chart" role="img" aria-label="读题时显卡在忙，但当前面板的 Active requests 和生成速度都显示零。写答案时三个指标都有活动。答完后答案停止生成。">
+<div></div><div class="timeline axis" aria-hidden="true"><span>读题<br>约 46 秒</span><span>写答案<br>约半秒</span><span>答完</span></div>
+<div class="metric" aria-hidden="true">显卡在忙</div><div class="timeline" aria-hidden="true"><span class="on-read"></span><span class="on-write"></span><span></span></div>
+<div class="metric" aria-hidden="true">活跃请求</div><div class="timeline" aria-hidden="true"><span></span><span class="on-write"></span><span></span></div>
+<div class="metric" aria-hidden="true">生成速度</div><div class="timeline" aria-hidden="true"><span></span><span class="on-write"></span><span></span></div>
+</div>
+<p class="note">有颜色表示这一项有活动。时间从左往右走，“写答案”这一段加宽了，方便看清。</p>
+<p class="takeaway"><b>读题时，显卡已经在干活。</b> 你看到的“活跃请求”（Active requests）只在 AI 开始写答案时才亮起来。“生成速度”数的也是每秒写出了多少内容，所以读题时这两项都显示 0。</p>
+</section>
+<footer>答完后，如果系统没有下一道题要处理，就会进入等待状态，通常叫 idle。</footer>
+</main>
+
+</body>
+</html>
+

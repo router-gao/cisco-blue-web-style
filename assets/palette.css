@@ -1,0 +1,12 @@
+:root {
+  --web-canvas: #f2f5f7;
+  --web-intro: #f1f5f8;
+  --web-surface: #ffffff;
+  --web-text: #07182c;
+  --web-muted: #425466;
+  --web-border: #c5d1db;
+  --web-cyan: #02c8ff;
+  --web-blue: #0a60ff;
+  --web-cyan-tint: #effbff;
+  --web-blue-tint: #f0f5ff;
+}
